@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Traducción de Texto</title>
+</head>
+<script>
+    let timeoutId;
+
+    function traducir(texto) {
+        clearTimeout(timeoutId);  // Reinicia el temporizador si se dispara 'keyup' nuevamente
+        timeoutId = setTimeout(function() {
+            if (texto === ""){
+                document.getElementById('result').value = "";
+                return
+            }
+            fetch('/translate?text=' + texto)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('result').value = data.translation;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }, 2000);  // Espera 3 segundos antes de ejecutar la función
+    }
+</script>
+<body>
+    <input onkeyup="traducir(this.value)" type="text" placeholder="Escribe aquí" />
+    <input type="text" id="result" placeholder="Resultado de la traducción" readonly>
+</body>
+</html>
