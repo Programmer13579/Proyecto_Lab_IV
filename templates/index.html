@@ -125,6 +125,7 @@
         if (texto === ""){
             return
         }
+        document.getElementById('textoQuestion').value = "";
         fetch('/question?text=' + texto)
             .then(response => response.json())
             .then(data => {

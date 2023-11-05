@@ -41,19 +41,24 @@ def translate(texto):
     text = texto
 
     headers = {'Authorization': f'Bearer {api_token}'}
-    response = requests.post(api_url, headers=headers, json={'inputs': text})
 
-    # Analizar la respuesta JSON
-    response_json = response.json()
+    try:
+        response = requests.post(api_url, headers=headers, json={'inputs': text})
 
-    # Extraer la traducción
-    if response_json:
-        translation = response_json[0].get('translation_text', 'No se encontró la traducción')
-    else:
-        translation = "Chatbot: Lo siento, ocurió un error al intentar traducir el texto. Por favor intenta de nuevo mas tarde."
+        # Analizar la respuesta JSON
+        response_json = response.json()
 
-    # Imprimir la traducción
-    return translation
+        # Extraer la traducción
+        if response_json:
+            translation = response_json[0].get('translation_text')
+        else:
+            translation = "Lo siento, ocurió un error al intentar traducir el texto. Por favor intenta de nuevo mas tarde."
+
+        # Imprimir la traducción
+        return translation
+    except:
+        translation = "Lo siento, ocurió un error al intentar traducir el texto. Por favor intenta de nuevo mas tarde."
+        return translation
 #preguntas y respuestas
 pares = [
     ['Hola', ['¡Hola!', 'Hola, ¿en qué puedo ayudarte?']],
