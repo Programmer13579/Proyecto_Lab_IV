@@ -2,30 +2,121 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+
     <title>Traducción de Texto</title>
 </head>
 <style>
-    .result{
-        background-color: aqua;
-        height: 70vh;
-        width: 90vw;
-        margin: auto;
-        overflow-y: scroll;
+    @import url('https://fonts.googleapis.com/css2?family=Sora&display=swap');
+    *{
+    font-family: 'Sora', sans-serif;
+    box-sizing: border-box;
+    margin:0;
+    padding:0;
+    background-color: #202123;
     }
+
+    body {
+    font-family: 'Sora', sans-serif;
+    background-color: #343541; /* Color de fondo */
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    
+    }
+
+    
+    /* Estilo del contenedor del chat */
+.result {
+    background-color: #343541;
+    height: 90vh;
+    width: 95vw;
+    margin: auto;
+    overflow-y: scroll;
+    color: aliceblue;
+    font-size: large;
+    padding-right: 8px; /* Espacio para la barra de desplazamiento vertical */
+    margin-bottom: 10px;
+    border-radius: 10px;
+    user-select: none; /* Evita la selección de texto en el elemento */
+    pointer-events: none; /* Deshabilita eventos de puntero en el elemento */
+    /* Resto de tus estilos */
+    
+
+}
+
+/* Estilo de los mensajes del chat */
+.result p {
+    background-color: #343541;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin: 5px 0;
+}
+
+/* Estilo de la barra de desplazamiento */
+.result::-webkit-scrollbar {
+    width: 8px;
+    background-color: #343541; /* Color de fondo de la barra de desplazamiento */
+}
+
+.result::-webkit-scrollbar-thumb {
+    background: #888; /* Color del thumb de la barra de desplazamiento */
+    border-radius: 10px; /* Borde redondeado del thumb */
+}
+
+.result::-webkit-scrollbar-track {
+    background: #343541; /* Color de fondo de la pista de la barra de desplazamiento */
+}
+
+.result::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Color del thumb cuando se pasa el cursor sobre él */
+}
+
     .questionsForm{
         margin: auto;
-        width: 90vw;
+        width: 95vw;
         display: flex;
+        user-select: none; /* Evita la selección de texto en el elemento */
+        
+        
+
     }
     .questionText{
         margin: auto;
         width: 100%;
-        height: 30px;
+        height: 60px;
         padding: 0;
+        background-color: #40414f;
+        color: aliceblue;
+        border-top-left-radius:10px ;
+        border-bottom-left-radius: 10px;
+        border: none;
+        padding-left: 20px;
+        padding-right: 20px;
+        font-size: 18px;
     }
+    
+   
     .questionButton{
         width: 100px;
+        text-align: center;
+        background-color: #40414f;
+        color: rgba(240, 248, 255, 0.521);
+        border-top-right-radius:10px ;
+        border-bottom-right-radius: 10px;
+        border: none;
     }
+    .questionButton i {
+        font-size: 20px;
+        margin-right: 0px; /* Espacio entre el ícono y el texto "Enviar" */
+        background-color: #40414f;
+        
+    }
+    
 </style>
 <script>
     let timeoutId;
@@ -65,10 +156,11 @@
     });
 </script>
 <body>
-    <div class="result" id="result"></div>
-    <form class="questionsForm" id="miInput">
-        <input class="questionText" type="text" placeholder="Escribe aquí" id="textoQuestion" onkeydown="ejecutarSiEsEnter(event)"/>
-        <button class="questionButton" type="button" onclick="traducir(document.getElementById('textoQuestion').value)">Enviar</button>
+    <div class="result" id="result" ></div>
+    <form class="questionsForm" id="miInput" style="background: transparent">
+        <input class="questionText" type="text" placeholder="Escribe aquí" id="textoQuestion" onkeydown="ejecutarSiEsEnter(event) " autocomplete="off"  />
+        <button class="questionButton" type="button" onclick="traducir(document.getElementById('textoQuestion').value)">
+            <i class="fas fa-comment"></i></button>
     </form>
 </body>
 </html>
