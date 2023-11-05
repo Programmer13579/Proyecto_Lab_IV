@@ -37,10 +37,14 @@
         fetch('/question?text=' + texto)
             .then(response => response.json())
             .then(data => {
-                let nuevoElemento = document.createElement("p");
-                nuevoElemento.textContent = data.translation;
+                let nuevoElemento1 = document.createElement("p");
+                nuevoElemento1.textContent = "Tu: " + texto;
+                let nuevoElemento2 = document.createElement("p");
+                nuevoElemento2.textContent = data.translation;
+
                 let divResult = document.getElementById('result')
-                divResult.appendChild(nuevoElemento);
+                divResult.appendChild(nuevoElemento1);
+                divResult.appendChild(nuevoElemento2);
                 divResult.scrollTop = divResult.scrollHeight;
             })
             .catch(error => {
