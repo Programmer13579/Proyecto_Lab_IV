@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,22 +11,20 @@
 </head>
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Sora&display=swap');
-    *{
+
+    * {
         font-family: 'Sora', sans-serif;
         box-sizing: border-box;
-        margin:0;
-        padding:0;
+        margin: 0;
+        padding: 0;
         background-color: #202123;
     }
 
     body {
         font-family: 'Sora', sans-serif;
-        background-color: #343541; /* Color de fondo */
+        background-color: #343541;
+        /* Color de fondo */
         margin: 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
         height: 100vh;
     }
 
@@ -55,30 +54,36 @@
     /* Estilo de la barra de desplazamiento */
     .result::-webkit-scrollbar {
         width: 8px;
-        background-color: #343541; /* Color de fondo de la barra de desplazamiento */
+        background-color: #343541;
+        /* Color de fondo de la barra de desplazamiento */
     }
 
     .result::-webkit-scrollbar-thumb {
-        background: #888; /* Color del thumb de la barra de desplazamiento */
-        border-radius: 10px; /* Borde redondeado del thumb */
+        background: #888;
+        /* Color del thumb de la barra de desplazamiento */
+        border-radius: 10px;
+        /* Borde redondeado del thumb */
     }
 
     .result::-webkit-scrollbar-track {
-        background: #343541; /* Color de fondo de la pista de la barra de desplazamiento */
+        background: #343541;
+        /* Color de fondo de la pista de la barra de desplazamiento */
     }
 
     .result::-webkit-scrollbar-thumb:hover {
-        background: #555; /* Color del thumb cuando se pasa el cursor sobre él */
+        background: #555;
+        /* Color del thumb cuando se pasa el cursor sobre él */
     }
 
-    .questionsForm{
+    .questionsForm {
         margin: auto;
         width: 95vw;
         display: flex;
-        user-select: none; /* Evita la selección de texto en el elemento */
+        user-select: none;
+        /* Evita la selección de texto en el elemento */
     }
 
-    .questionText{
+    .questionText {
         margin: auto;
         width: 100%;
         height: 60px;
@@ -93,48 +98,76 @@
         font-size: 18px;
         outline: 0px;
     }
-    .questionText:focus{
+
+    .questionText:focus {
         border: none;
     }
 
-    .questionButton{
+    .questionButton {
         width: 100px;
         text-align: center;
         background-color: #40414f;
         color: rgba(240, 248, 255, 0.521);
-        border-top-right-radius:10px ;
+        border-top-right-radius: 10px;
         border-bottom-right-radius: 10px;
         border: none;
         cursor: pointer;
     }
-    
-    .borderFocus{
+
+    .borderFocus {
         color: rgb(73, 232, 166);
     }
 
     .questionButton i {
         font-size: 20px;
-        margin-right: 0px; /* Espacio entre el ícono y el texto "Enviar" */
+        margin-right: 0px;
+        /* Espacio entre el ícono y el texto "Enviar" */
         background-color: #40414f;
-        
+
+    }
+
+    footer {
+        background-color: #343541;
+        color: #fff;
+        padding: 20px 0;
+    }
+
+    footer h3 {
+        font-size: 24px;
+    }
+
+    footer p {
+        text-align: center;
+        background-color: #343541;
     }
 </style>
 
 <body>
-    <div class="result" id="result" ></div>
+    <div class="result" id="result"></div>
     <form class="questionsForm" id="miInput" style="background: transparent">
-        <input  tabindex="0" class="questionText" id="textoQuestion" type="text" placeholder="Escribe aquí" onkeydown="ejecutarSiEsEnter(event) " autocomplete="off"  />
-        <button class="questionButton" id="buttonQuestion" type="button" onclick="traducir(document.getElementById('textoQuestion').value)">
+        <input tabindex="0" class="questionText" id="textoQuestion" type="text" placeholder="Escribe aquí"
+            onkeydown="ejecutarSiEsEnter(event) " autocomplete="off" />
+        <button class="questionButton" id="buttonQuestion" type="button"
+            onclick="traducir(document.getElementById('textoQuestion').value)">
             <i class="fas fa-comment"></i>
         </button>
     </form>
+    <div class="container-fluid">
+        <footer class="bg-dark text-light py-4">
+            <div class="container">
+                <div class="row">
+                    <p>2023 Todos los derechos reservados</p>
+                </div>
+            </div>
+        </footer>
+    </div>
 </body>
 
 <script>
     let timeoutId;
 
     const traducir = (texto) => {
-        if (texto === ""){
+        if (texto === "") {
             return
         }
         document.getElementById('textoQuestion').value = "";
@@ -162,10 +195,10 @@
         }
     }
 
-    document.getElementById("miInput").addEventListener("keydown", function(event) {
-      if (event.key === "Enter") {
-        event.preventDefault();
-      }
+    document.getElementById("miInput").addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+        }
     });
 
     const componente1 = document.getElementById('textoQuestion');
@@ -179,4 +212,5 @@
         componente2.classList.remove('borderFocus');
     });
 </script>
+
 </html>
