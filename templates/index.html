@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
 
@@ -10,81 +11,73 @@
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Sora&display=swap');
     *{
-    font-family: 'Sora', sans-serif;
-    box-sizing: border-box;
-    margin:0;
-    padding:0;
-    background-color: #202123;
+        font-family: 'Sora', sans-serif;
+        box-sizing: border-box;
+        margin:0;
+        padding:0;
+        background-color: #202123;
     }
 
     body {
-    font-family: 'Sora', sans-serif;
-    background-color: #343541; /* Color de fondo */
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    
+        font-family: 'Sora', sans-serif;
+        background-color: #343541; /* Color de fondo */
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
     }
 
-    
     /* Estilo del contenedor del chat */
-.result {
-    background-color: #343541;
-    height: 90vh;
-    width: 95vw;
-    margin: auto;
-    overflow-y: scroll;
-    color: aliceblue;
-    font-size: large;
-    padding-right: 8px; /* Espacio para la barra de desplazamiento vertical */
-    margin-bottom: 10px;
-    border-radius: 10px;
-    user-select: none; /* Evita la selección de texto en el elemento */
-    pointer-events: none; /* Deshabilita eventos de puntero en el elemento */
-    /* Resto de tus estilos */
-    
+    .result {
+        background-color: #343541;
+        height: calc(100% - 100px);
+        width: 95vw;
+        margin: auto;
+        overflow-y: scroll;
+        color: aliceblue;
+        font-size: large;
+        padding-right: 8px;
+        margin-bottom: 10px;
+        border-radius: 10px;
+    }
 
-}
+    /* Estilo de los mensajes del chat */
+    .result p {
+        background-color: #343541;
+        padding: 5px 10px;
+        border-radius: 5px;
+        margin: 5px 0;
+        color: rgb(194, 228, 255);
+    }
 
-/* Estilo de los mensajes del chat */
-.result p {
-    background-color: #343541;
-    padding: 5px 10px;
-    border-radius: 5px;
-    margin: 5px 0;
-}
+    /* Estilo de la barra de desplazamiento */
+    .result::-webkit-scrollbar {
+        width: 8px;
+        background-color: #343541; /* Color de fondo de la barra de desplazamiento */
+    }
 
-/* Estilo de la barra de desplazamiento */
-.result::-webkit-scrollbar {
-    width: 8px;
-    background-color: #343541; /* Color de fondo de la barra de desplazamiento */
-}
+    .result::-webkit-scrollbar-thumb {
+        background: #888; /* Color del thumb de la barra de desplazamiento */
+        border-radius: 10px; /* Borde redondeado del thumb */
+    }
 
-.result::-webkit-scrollbar-thumb {
-    background: #888; /* Color del thumb de la barra de desplazamiento */
-    border-radius: 10px; /* Borde redondeado del thumb */
-}
+    .result::-webkit-scrollbar-track {
+        background: #343541; /* Color de fondo de la pista de la barra de desplazamiento */
+    }
 
-.result::-webkit-scrollbar-track {
-    background: #343541; /* Color de fondo de la pista de la barra de desplazamiento */
-}
-
-.result::-webkit-scrollbar-thumb:hover {
-    background: #555; /* Color del thumb cuando se pasa el cursor sobre él */
-}
+    .result::-webkit-scrollbar-thumb:hover {
+        background: #555; /* Color del thumb cuando se pasa el cursor sobre él */
+    }
 
     .questionsForm{
         margin: auto;
         width: 95vw;
         display: flex;
         user-select: none; /* Evita la selección de texto en el elemento */
-        
-        
-
     }
+
     .questionText{
         margin: auto;
         width: 100%;
@@ -92,15 +85,18 @@
         padding: 0;
         background-color: #40414f;
         color: aliceblue;
-        border-top-left-radius:10px ;
+        border-top-left-radius: 10px;
         border-bottom-left-radius: 10px;
         border: none;
         padding-left: 20px;
         padding-right: 20px;
         font-size: 18px;
+        outline: 0px;
     }
-    
-   
+    .questionText:focus{
+        border: none;
+    }
+
     .questionButton{
         width: 100px;
         text-align: center;
@@ -109,15 +105,31 @@
         border-top-right-radius:10px ;
         border-bottom-right-radius: 10px;
         border: none;
+        cursor: pointer;
     }
+    
+    .borderFocus{
+        color: rgb(73, 232, 166);
+    }
+
     .questionButton i {
         font-size: 20px;
         margin-right: 0px; /* Espacio entre el ícono y el texto "Enviar" */
         background-color: #40414f;
         
     }
-    
 </style>
+
+<body>
+    <div class="result" id="result" ></div>
+    <form class="questionsForm" id="miInput" style="background: transparent">
+        <input  tabindex="0" class="questionText" id="textoQuestion" type="text" placeholder="Escribe aquí" onkeydown="ejecutarSiEsEnter(event) " autocomplete="off"  />
+        <button class="questionButton" id="buttonQuestion" type="button" onclick="traducir(document.getElementById('textoQuestion').value)">
+            <i class="fas fa-comment"></i>
+        </button>
+    </form>
+</body>
+
 <script>
     let timeoutId;
 
@@ -146,7 +158,7 @@
     function ejecutarSiEsEnter(event) {
         if (event.key === 'Enter') {
             traducir(event.target.value);
-            event.preventDefault(); // Esto evita que se inserte un salto de línea en el input
+            event.preventDefault();
         }
     }
 
@@ -155,13 +167,16 @@
         event.preventDefault();
       }
     });
+
+    const componente1 = document.getElementById('textoQuestion');
+    const componente2 = document.getElementById('buttonQuestion');
+
+    componente1.addEventListener('focus', () => {
+        componente2.classList.add('borderFocus');
+    });
+
+    componente1.addEventListener('blur', () => {
+        componente2.classList.remove('borderFocus');
+    });
 </script>
-<body>
-    <div class="result" id="result" ></div>
-    <form class="questionsForm" id="miInput" style="background: transparent">
-        <input class="questionText" type="text" placeholder="Escribe aquí" id="textoQuestion" onkeydown="ejecutarSiEsEnter(event) " autocomplete="off"  />
-        <button class="questionButton" type="button" onclick="traducir(document.getElementById('textoQuestion').value)">
-            <i class="fas fa-comment"></i></button>
-    </form>
-</body>
 </html>
