@@ -63,7 +63,6 @@ def translate(texto):
 pares = [
     ['Hola', ['¡Hola!', 'Hola, ¿en qué puedo ayudarte?']],
     ['Sos real?', ['No! soy un programa creado por Thomas, Eric, Matias y Franco.']],
-    ['Eres real?', ['No! soy un programa creado por Thomas, Eric, Matias y Franco.']],
     ['Que eres?', ['Soy un programa creado por Thomas, Eric, Matias y Franco.']],
     ['Quien eres?', ['Soy un programa creado por Thomas, Eric, Matias y Franco.']],
     ['Que es Python?', ['Python es un lenguaje de programación de alto nivel ampliamente utilizado para desarrollo de software.']],
