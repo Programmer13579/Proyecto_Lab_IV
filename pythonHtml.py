@@ -61,7 +61,8 @@ def translate(texto):
         return translation
 #preguntas y respuestas
 pares = [
-    ['Hola', ['¡Hola!', 'Hola, ¿en qué puedo ayudarte?']],
+    ['Hola', ['¡Hola!', '¡Hola!, ¿en qué puedo ayudarte?']],
+    ['Ok', ['¡Hola! ¿Cómo puedo ayudarte hoy?']],
     ['Sos real?', ['No! soy un programa creado por Thomas, Eric, Matias y Franco.']],
     ['Que eres?', ['Soy un programa creado por Thomas, Eric, Matias y Franco.']],
     ['Quien eres?', ['Soy un programa creado por Thomas, Eric, Matias y Franco.']],
