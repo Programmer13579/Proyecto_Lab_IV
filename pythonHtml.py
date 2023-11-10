@@ -23,7 +23,7 @@ def question():
     usuario_input = request.args.get('text')    #Obtiene la entrada del usuario desde la solicitud GET
     if usuario_input.lower() == 'salir':  #Verifica si el usuario quiere salir el chat  
         return jsonify({'translation': "Chatbot: ¡Hasta luego!"})
-    elif usuario_input[:14].lower() == 'traduce esto: ':     #Verifica si el usuario quiere traducir texto
+    elif usuario_input[:14].lower() == 'traduce: ':     #Verifica si el usuario quiere traducir texto
         translation = translate(usuario_input[14:])
         return jsonify({'translation': ("Chatbot: " + translation)})
     elif usuario_input[:9].lower() == 'traduce: ':
@@ -41,7 +41,7 @@ def question():
 #funcion para traducir texto utilizando la API hugging face
 def translate(texto):
     api_token = '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'
-    model_name = 'Helsinki-NLP/opus-mt-en-es'
+    model_name = 'Helsinki-NLP/opus-mt-es-en' #de español a ingles
 
     api_url = f'https://api-inference.huggingface.co/models/{model_name}'
     text = texto
