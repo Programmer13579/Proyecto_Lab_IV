@@ -23,11 +23,11 @@ def question():
     usuario_input = request.args.get('text')    #Obtiene la entrada del usuario desde la solicitud GET
     if usuario_input.lower() == 'salir':  #Verifica si el usuario quiere salir el chat  
         return jsonify({'translation': "Chatbot: ¡Hasta luego!"})
-    elif usuario_input[:14].lower() == 'traduce: ':     #Verifica si el usuario quiere traducir texto
-        translation = translate(usuario_input[14:])
+    elif usuario_input[:21].lower() == 'traduce del español: ':     #Verifica si el usuario quiere traducir texto
+        translation = translate(usuario_input[21:], 1)
         return jsonify({'translation': ("Chatbot: " + translation)})
-    elif usuario_input[:9].lower() == 'traduce: ':
-        translation = translate(usuario_input[9:])
+    elif usuario_input[:20].lower() == 'traduce del ingles: ':     #Verifica si el usuario quiere traducir texto
+        translation = translate(usuario_input[20:], 2)
         return jsonify({'translation': ("Chatbot: " + translation)})
     else:           #Si no es una solicitud de salida o traduccion, se obtiene una respuesta del chatbot
         respuesta = chatbot.respond(unidecode(usuario_input))
@@ -39,9 +39,12 @@ def question():
 
 
 #funcion para traducir texto utilizando la API hugging face
-def translate(texto):
+def translate(texto, idioma):
     api_token = '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'
-    model_name = 'Helsinki-NLP/opus-mt-es-en' #de español a ingles
+    if idioma == 1:
+        model_name = 'Helsinki-NLP/opus-mt-es-en' #de español a ingles
+    else:
+        model_name = 'Helsinki-NLP/opus-mt-en-es' #de ingles a español
 
     api_url = f'https://api-inference.huggingface.co/models/{model_name}'
     text = texto
@@ -65,6 +68,7 @@ def translate(texto):
     except:
         translation = "Lo siento, ocurió un error al intentar traducir el texto. Por favor intenta de nuevo mas tarde."
         return translation
+
 #preguntas y respuestas
 pares = [
     ['Hola', ['¡Hola!', '¡Hola!, ¿en qué puedo ayudarte?']],
