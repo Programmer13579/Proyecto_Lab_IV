@@ -1,38 +1,44 @@
+#importar moduos necesarios
 from flask import Flask, render_template, request, jsonify
 import nltk
 from nltk.chat.util import Chat, reflections
 import requests
 from unidecode import unidecode
 
+#iniciar la app flask
 app = Flask(__name__)
 
+#agregamos la ruta del modelo nltk
 nltk.data.path.append('C:\\Users\\thoma\\OneDrive\\Escritorio\\Proyecto_lab\\punkt_y_wordnet')
 
+#esta es la ruta principal que renderizaria la pantalla del front (index.html)
 @app.route('/')
 def index():
     return render_template('./index.html')
 
+#ruta para manejar las preguntas del usuario
 @app.route('/question', methods=['GET'])
 def question():
-    chatbot = Chat(pares, reflections)
-    usuario_input = request.args.get('text')
-    if usuario_input.lower() == 'salir':
+    chatbot = Chat(pares, reflections)  #Crea un objeto delchatbot con los pares de preguntas y respuestas
+    usuario_input = request.args.get('text')    #Obtiene la entrada del usuario desde la solicitud GET
+    if usuario_input.lower() == 'salir':  #Verifica si el usuario quiere salir el chat  
         return jsonify({'translation': "Chatbot: ¡Hasta luego!"})
-    elif usuario_input[:14].lower() == 'traduce esto: ':
+    elif usuario_input[:14].lower() == 'traduce esto: ':     #Verifica si el usuario quiere traducir texto
         translation = translate(usuario_input[14:])
         return jsonify({'translation': ("Chatbot: " + translation)})
     elif usuario_input[:9].lower() == 'traduce: ':
         translation = translate(usuario_input[9:])
         return jsonify({'translation': ("Chatbot: " + translation)})
-    else:
+    else:           #Si no es una solicitud de salida o traduccion, se obtiene una respuesta del chatbot
         respuesta = chatbot.respond(unidecode(usuario_input))
-        if respuesta is None:
+        if respuesta is None:   #verifica si la respuesta es nula
             return jsonify({'translation': "Chatbot: Lo siento, no puedo responder a tu pregunta"})
         else:
             return jsonify({'translation': ("Chatbot: " + respuesta)})
 
 
 
+#funcion para traducir texto utilizando la API hugging face
 def translate(texto):
     api_token = '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'
     model_name = 'Helsinki-NLP/opus-mt-en-es'
@@ -76,5 +82,6 @@ pares = [
     ['Adios', ['¡Adiós!', 'Hasta luego, que tengas un buen día.']],
 ]
 
+#inicia la aplicacion flask esi se ejecuta el script directamente
 if __name__ == '__main__':
     app.run(port=5000)
